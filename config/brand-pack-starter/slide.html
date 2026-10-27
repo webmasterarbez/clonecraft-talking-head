@@ -1,0 +1,156 @@
+<!doctype html>
+<!-- Shorts slide template for a channel brand pack. pipeline/layout.py fills __SLIDE__ and __PACK__,
+     then screenshots it with headless Chrome at the panel size for the slide's mode.
+     Modes: split (top panel), card (full frame), banner (floating card over the video), pill (disclosure),
+     badge (mark and wordmark over the Face sections), end (the end card after the Voiceover). -->
+<html><head><meta charset="utf-8"><style>
+@font-face { font-family: Jakarta; src: url("__FONT_UI__"); font-weight: 200 800; }
+@font-face { font-family: Mono; src: url("__FONT_MONO__"); font-weight: 100 800; }
+* { margin: 0; box-sizing: border-box; }
+html, body { width: 100%; height: 100%; background: transparent; overflow: hidden; }
+body { font-family: Jakarta, sans-serif; color: var(--text); -webkit-font-smoothing: antialiased; }
+.frame { position: absolute; inset: 0; display: flex; flex-direction: column; }
+.split, .card, .join { background:
+  radial-gradient(120% 70% at 85% 0%, color-mix(in srgb, var(--teal) 16%, transparent), transparent 60%),
+  radial-gradient(90% 60% at 0% 100%, color-mix(in srgb, var(--teal-strong) 10%, transparent), transparent 70%), var(--bg); }
+.split { padding: 170px 84px 200px; }
+.card { padding: 500px 84px 600px; }
+.join { padding: 250px 84px 880px; }
+/* backdrop behind the matted clone: night gradient, teal glow behind the head, faint dot grid, vignette */
+.backdrop { background:
+  radial-gradient(80% 42% at 50% 27%, color-mix(in srgb, var(--teal) 34%, transparent), transparent 70%),
+  radial-gradient(120% 80% at 50% 110%, color-mix(in srgb, var(--teal-strong) 14%, transparent), transparent 60%),
+  radial-gradient(circle at 1px 1px, color-mix(in srgb, var(--text) 7%, transparent) 1.4px, transparent 1.6px) 0 0/44px 44px,
+  linear-gradient(180deg, var(--panel), var(--bg)); }
+.backdrop::after { content: ""; position: absolute; inset: 0; background: radial-gradient(110% 80% at 50% 45%, transparent 55%, rgba(0,0,0,.45)); }
+.join .text { font-size: 96px; }
+.k-quote .text { font-size: 88px; line-height: 1.1; }
+.k-quote .body::before { content: "\201C"; display: block; height: 120px; margin-bottom: 10px; font: 800 220px/1 Jakarta; color: var(--teal); }
+.join .stat { font-size: 300px; }
+.banner { inset: 0; padding: 40px 52px; border-radius: 36px; background: color-mix(in srgb, var(--panel) 94%, transparent);
+  border: 2px solid var(--line); border-left: 12px solid var(--teal); }
+.pill { inset: 0; border-radius: 999px; background: color-mix(in srgb, var(--bg) 88%, transparent); border: 2px solid var(--line);
+  display: flex; flex-direction: row; align-items: center; justify-content: center; gap: 16px; font: 600 30px/1 Jakarta; color: var(--text); }
+.eyebrow { display: flex; align-items: center; gap: 18px; font: 500 30px/1 Mono; letter-spacing: .14em; text-transform: uppercase; color: var(--teal); margin-bottom: 44px; }
+.eyebrow img { width: 58px; height: 58px; border-radius: 14px; }
+.banner .eyebrow { margin-bottom: 28px; font-size: 26px; }
+.banner .eyebrow img { width: 48px; height: 48px; }
+.body { flex: 1; display: flex; flex-direction: column; justify-content: center; }
+.text { font-weight: 800; font-size: 92px; line-height: 1.04; letter-spacing: -.02em; text-wrap: balance; }
+.k-title .text { font-size: 112px; }
+.banner .text { font-size: 58px; }
+.sub { margin-top: 34px; font-weight: 500; font-size: 44px; line-height: 1.25; color: var(--muted); text-wrap: pretty; }
+.banner .sub { font-size: 34px; margin-top: 20px; }
+em { font-style: normal; color: var(--teal); }
+strong { color: var(--gold); }
+.stat { font: 700 300px/0.9 Mono; letter-spacing: -.04em; color: var(--gold); }
+.banner .stat { font-size: 130px; }
+.stat + .text { margin-top: 30px; font-size: 80px; }
+.card .stat { font-size: 380px; }
+.checks { list-style: none; padding: 0; display: grid; gap: 34px; }
+.checks li { display: flex; gap: 30px; align-items: flex-start; font-weight: 700; font-size: 62px; line-height: 1.12; }
+.banner .checks { gap: 14px; }
+.banner .checks li { font-size: 38px; gap: 20px; }
+.banner .checks li::before { width: 44px; height: 44px; margin-top: 0; }
+.checks li::before { content: ""; flex: none; width: 64px; height: 64px; margin-top: 4px; border-radius: 50%;
+  background: var(--teal) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M5 12.5l4.5 4.5L19 7.5' fill='none' stroke='%2307151f' stroke-width='3.2' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E") center/70% no-repeat; }
+.cta-btn { align-self: flex-start; margin-top: 46px; padding: 26px 46px; border-radius: 999px; background: var(--teal); color: var(--bg); font-weight: 800; font-size: 46px; }
+.banner .cta-btn { font-size: 34px; padding: 18px 34px; margin-top: 26px; }
+/* point chip (top of frame): "1 of 3 · The sniff test" */
+.chip { inset: 0; display: flex; flex-direction: row; align-items: center; justify-content: center; gap: 22px; padding: 0 36px; border-radius: 999px;
+  background: color-mix(in srgb, var(--bg) 88%, transparent); border: 2px solid var(--line); font: 700 46px/1 Jakarta; color: var(--text); }
+.chip b { font: 700 38px/1 Mono; color: var(--bg); background: var(--teal); border-radius: 999px; padding: 10px 16px; }
+/* prop: a generic job posting with red flags (never a real company's UI) */
+.posting { margin-top: 10px; border-radius: 32px; background: var(--panel); border: 2px solid var(--line); padding: 44px; display: grid; gap: 26px; }
+.posting .head { display: flex; gap: 26px; align-items: center; }
+.posting .logo { width: 96px; height: 96px; border-radius: 22px; background: var(--line); }
+.posting .role { font: 800 52px/1.1 Jakarta; } .posting .co { font: 500 34px/1.2 Jakarta; color: var(--muted); margin-top: 8px; }
+.posting .row { display: flex; justify-content: space-between; align-items: center; gap: 20px; padding: 22px 26px; border-radius: 18px;
+  background: color-mix(in srgb, var(--bg) 70%, transparent); font: 600 40px/1.15 Jakarta; }
+.posting .row.flag { outline: 4px solid var(--coral); box-shadow: 0 0 40px color-mix(in srgb, var(--coral) 35%, transparent); }
+.posting .row .tag { flex: none; font: 700 24px/1 Mono; letter-spacing: .1em; color: var(--bg); background: var(--coral); padding: 10px 14px; border-radius: 10px; }
+.posting { position: relative; }
+.posting .stamp { position: absolute; right: 40px; bottom: 34px; transform: rotate(-10deg); border: 7px solid var(--coral); color: var(--coral);
+  font: 800 54px/1 Jakarta; letter-spacing: .04em; padding: 12px 22px; border-radius: 14px; background: color-mix(in srgb, var(--bg) 70%, transparent); }
+.posting .apply { justify-self: start; padding: 20px 38px; border-radius: 999px; background: var(--line); color: var(--muted); font: 700 34px/1 Jakarta; }
+/* style B (explainer, after Jeff Su): darker canvas, dot grid, mono labels */
+.style-b .join, .style-b .card { background: radial-gradient(circle at 1px 1px, color-mix(in srgb, var(--text) 9%, transparent) 1.4px, transparent 1.6px) 0 0/40px 40px, #0a1218; }
+.style-b .text { font-weight: 700; letter-spacing: -.01em; }
+.style-b .eyebrow { color: var(--muted); }
+/* style C (progress, after Wonsulting): huge type, gold numbers, step dots */
+.style-c .join .text { font-size: 132px; line-height: .98; letter-spacing: -.035em; }
+.style-c .k-quote .text { font-size: 104px; }
+.style-c .steps { display: flex; gap: 16px; margin-top: 54px; }
+.style-c .steps i { width: 64px; height: 12px; border-radius: 99px; background: var(--line); }
+.style-c .steps i.on { background: var(--teal); }
+/* style P (plain, after native explainer Shorts): paper background, one huge line, one marker-highlighted word */
+.style-p .card { background: #f3efe6; color: #121417; padding: 260px 90px 560px; }
+.style-p .card .text { font-size: 132px; line-height: 1.02; letter-spacing: -.03em; }
+.style-p .card.k-title .text { font-size: 168px; }
+.style-p .card em { color: #121417; background: linear-gradient(transparent 58%, #2dd4bf 58%, #2dd4bf 92%, transparent 92%); padding: 0 .06em; }
+.style-p .card strong { color: #b91c1c; }
+.style-p .card .sub { color: #4b5563; font-size: 56px; margin-top: 44px; }
+.style-p .card { justify-content: center; } .style-p .card .body { flex: none; }
+.style-p .card .eyebrow { color: #0f766e; font: 700 46px/1 Mono; letter-spacing: .12em; margin-bottom: 40px; }
+.style-p .card .eyebrow img { width: 52px; height: 52px; }
+.style-p .card .cta-btn { background: #121417; color: #f3efe6; font-size: 50px; }
+.style-p .card .eyebrow.warn { color: #b91c1c; }
+/* badge (CloneCraft): the mark and the wordmark, bottom left over the Face sections */
+.badge { inset: 0 auto 0 0; flex-direction: row; align-items: center; gap: 16px; padding: 0 28px 0 14px; border-radius: 22px;
+  background: color-mix(in srgb, #f3efe6 92%, transparent); color: #121417; font: 700 40px/1 Jakarta; letter-spacing: -.02em; white-space: nowrap; }
+.badge img { width: 72px; height: 72px; border-radius: 16px; }
+/* end card (CloneCraft): held in silence after the Voiceover */
+.end { background: #f3efe6; color: #121417; align-items: center; justify-content: center; text-align: center; gap: 44px; padding: 0 90px 200px; }
+.end img { width: 300px; height: 300px; border-radius: 64px; }
+.end .wm { font: 800 120px/1 Jakarta; letter-spacing: -.03em; }
+.end .line { font: 500 56px/1.2 Jakarta; color: #4b5563; max-width: 900px; text-wrap: balance; }
+.end .line em { font-style: italic; color: #0f766e; }
+.end .url { font: 600 52px/1 Mono; color: #0f766e; }
+/* 16:9 (CloneCraft, ADR 0007): the same cards laid out for a landscape frame; 9:16 is untouched */@media (min-aspect-ratio: 1/1) {
+  .card { padding: 120px 200px; justify-content: center; } .card .body { flex: none; }
+  .card .stat { font-size: 260px; }
+  .style-p .card { padding: 120px 200px; }
+  .style-p .card .text { font-size: 112px; max-width: 1400px; }
+  .style-p .card.k-title .text { font-size: 136px; }
+  .style-p .card .sub { font-size: 50px; max-width: 1300px; }
+  .card.k-posting .body { display: grid; grid-template-columns: 1fr 1.1fr; gap: 90px; align-items: center; }
+  .card.k-posting .posting { margin-top: 0; }
+}
+</style></head><body><div id="root"></div><script>
+const S = __SLIDE__, P = __PACK__;
+const c = P.colors, r = document.documentElement.style;
+for (const [k, v] of Object.entries({bg: c.bg, panel: c.panel, line: c.line, text: c.text, muted: c.muted, teal: c.teal, "teal-strong": c.teal_strong, gold: c.gold, coral: c.coral}))
+  r.setProperty("--" + k, v);
+// *word* -> teal emphasis, **word** -> gold (money / stars); everything else is escaped text
+const esc = s => String(s ?? "").replace(/[&<>"]/g, ch => ({"&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;"}[ch]));
+const fmt = s => esc(s).replace(/\*\*(.+?)\*\*/g, "<strong>$1</strong>").replace(/\*(.+?)\*/g, "<em>$1</em>");
+const root = document.getElementById("root");
+document.body.className = "style-" + (S.style || "a");
+if (S.kind === "raw") {  // storyboard mocks (the hook box): trusted HTML from the storyboard spec
+  root.innerHTML = `<div class="frame" style="align-items:center;justify-content:center;text-align:center;padding:0 70px">${S.html}</div>`;
+} else if (S.mode === "chip") {
+  root.innerHTML = `<div class="frame chip"><b>${esc(S.n)}</b>${fmt(S.text)}</div>`;
+} else if (S.mode === "backdrop") {
+  root.innerHTML = `<div class="frame backdrop"></div>`;
+} else if (S.mode === "badge") {
+  root.innerHTML = `<div class="frame badge"><img src="${P.mark_url}">${esc(S.text)}</div>`;
+} else if (S.mode === "end") {
+  root.innerHTML = `<div class="frame end"><img src="${P.mark_url}"><div class="wm">${esc(S.text)}</div><div class="line">${fmt(S.line).replace(/\n/g, "<br>")}</div><div class="url">${esc(S.url)}</div></div>`;
+} else if (S.mode === "pill") {
+  root.innerHTML = `<div class="frame pill"><img src="${P.mark_url}" width="40" height="40" style="border-radius:10px">${esc(S.text)}</div>`;
+} else {
+  let body = "";
+  if (S.kind === "stat") body = `<div class="stat">${esc(S.value)}</div><div class="text">${fmt(S.text)}</div>`;
+  else if (S.kind === "posting") body = `<div class="text" style="font-size:72px">${fmt(S.text)}</div><div class="posting">
+      <div class="head"><div class="logo"></div><div><div class="role">${esc(S.role || "Senior Product Manager")}</div><div class="co">${esc(S.company || "A company near you · Remote")}</div></div></div>
+      ${(S.rows || []).map(r => `<div class="row ${r.flag ? "flag" : ""}"><span>${fmt(r.text)}</span>${r.flag ? `<span class="tag">RED FLAG</span>` : ""}</div>`).join("")}
+      <div class="apply">Easy apply</div>${S.stamp ? `<div class="stamp">${esc(S.stamp)}</div>` : ""}</div>`;
+  else if (S.kind === "checklist") body = `<ul class="checks">${String(S.text).split(/\s*\/\s*|\n/).filter(Boolean).map(t => `<li><span>${fmt(t)}</span></li>`).join("")}</ul>`;
+  else body = `<div class="text">${fmt(S.text)}</div>`;
+  if (S.sub) body += `<div class="sub">${fmt(S.sub)}</div>`;
+  if (S.kind === "cta" && S.button) body += `<div class="cta-btn">${esc(S.button)}</div>`;
+  if (S.style === "c" && S.step) body += `<div class="steps">${[1, 2, 3].map(i => `<i class="${i <= S.step ? "on" : ""}"></i>`).join("")}</div>`;
+  const eyebrow = S.eyebrow ? `<div class="eyebrow${/red flag/i.test(S.eyebrow) ? " warn" : ""}"><img src="${P.mark_url}">${esc(S.eyebrow)}</div>` : "";
+  root.innerHTML = `<div class="frame ${S.mode} k-${S.kind}">${eyebrow}<div class="body">${body}</div></div>`;
+}
+</script></body></html>

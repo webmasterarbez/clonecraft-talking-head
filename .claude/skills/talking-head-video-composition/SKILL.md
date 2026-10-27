@@ -1,0 +1,31 @@
+---
+name: talking-head-video-composition
+description: Use when adding slide cards, a hook or a Brand pack to a Video.
+category: video-production
+---
+
+# Time slide cards on a Video from the Voiceover's word timings
+
+Place every slide card from the word timings of the Voiceover take, never from guessed seconds, and price the face before choosing a layout. The approved look's constants are in `src/clonecraft/frame.py`.
+
+- Match each card's trigger phrase loosely (first four words, then fewer) and spell out heard digits before matching: the transcriber writes "10" where the Script says "ten". Raise a named error when a phrase is not heard.
+- Cut a card in 0.12 s before its phrase. Drop a card that would hold under 0.6 s. No tail cut: the Speech Check already trims each take, so the Video runs to the end of the Voiceover and the last card holds to the end; a Brand pack's end card then adds 2.5 s of silence.
+- Animate a card only with a slow push-in (3.5% over its hold) and hard cuts between cards.
+- A slow push-in changes every frame, so a freeze check must use a low noise floor (the approved look uses 0.0001) or it rejects good cards.
+- Layout is decided: the Face section opens the Video and Slide cards run to the end, so only the Face section renders on the face engine. The Face section ends 0.12 s before the first card's phrase unless the front matter sets `face_ends_after:`. Warn, without refusing, when a Face section would run past 45 s. **Built: Face sections, Slide cards, 16:9 cards (the Operator has not yet looked at them), the hook. Captions were removed at the Operator's request. The badge (pack `wordmark`, bottom left over Face sections) and the end card (pack `end_card`, 2.5 s of silence after the Voiceover) are built; see ADR 0007.** A Script with no slides list is one Face section over the whole Voiceover; a Video of Slide cards only needs no Likeness and never uses the face engine. Read the code (`video.faces_for`, `video.render_faces`, `cards.place`) before assuming a path exists.
+- Keep each Face section's clip in `videos/face-sections/<name>.<width>x<height>/` and reuse it while the Likeness and that slice of the Voiceover are unchanged.
+- Brand packs belong to a Persona, in its `brand-packs/` folder. The Channel names one with `brand_pack:` in `channel.yaml`; a Persona with one pack needs no setting. The starter pack is `config/brand-pack-starter/`.
+- A Brand pack's `slide.html` lays out both Formats. Put the 16:9 rules in a `@media (min-aspect-ratio: 1/1)` block after the 9:16 rules, so 9:16 output does not change. Verify with `scripts/render-card-kinds.py`, run from the repo root as `uv run python .claude/skills/talking-head-video-composition/scripts/render-card-kinds.py PACK OUT SIZE...` (needs Google Chrome on PATH): render a baseline before the edit, render again after, `cmp -s` each 9:16 PNG against its baseline (they must be identical), and require `fits` on every line. A fit check cannot judge balance, so also view the 16:9 contact sheet. Until the Operator approves a real 16:9 card set, say so when reporting 16:9 cards.
+- The hook (front matter `hook`, with `hook_hold`; ADR 0007) is drawn over the opening Face section and never past it. A Script with `hook` must also give `hook_hold` above 0: the earlier default is not kept, so the Operator chose to require it. A Video that opens on a Slide card leaves the hook out with a warning.
+- Decide whether a Brand pack is used with `ScriptParts.uses_brand_pack`, which is true when the Script has a Slide card that is not a Face section, or a hook, and test `hook: ""` too. A truthiness check at one site and an `is None` check at the other crashed the run with an AssertionError.
+- The disclosure pill is the approved look's `pill` mode: the Brand pack's `disclosure` text at `frame.PILL_BOX` (720×84), centred at `frame.PILL_Y` (1330 px down the frame), held over the whole last Slide card. It is on whenever the pack has `disclosure`, with no flag. A Video with no Slide card leaves it out, with a warning when a hook drew the pack.
+- The pill's template branch is not drawn by the test fakes. `FakeBrowser` does not render `slide.html`, so a mutant that flips the pack's `pill` mode to `card` survives the suite. Check that branch with a real Chrome render, and name the surviving mutant in the commit body.
+- Drawing a new page for a Video changes what `browser.pages` holds. Tests that count the pages, or check their sizes, must count the new page too; adding it without updating those assertions breaks several tests at once.
+- Frame geometry and loudness constants live in `frame.py` only.
+- Loudness is applied to every Video's audio, pack or not. `loudness.py` does the work and `frame.py` holds its constants. The starter pack has no loudness setting, so whether loudness should depend on a Brand pack is still the Operator's decision. Ask before making it pack-dependent; do not treat the old `pack.json` premise as a fact.
+- The hook is drawn by headless Chrome on a transparent background, at the approved look's 1080×420. In 16:9 it is scaled by the smaller of the width and height ratios to the approved look's 1080×1920 frame, so it keeps its share of the frame.
+- Input seeking (`-ss` before `-i`) restarts the clip's timestamps at 0, so an overlay `enable='lt(t,…)'` counts from the cut, not from the Voiceover.
+- Check `GLOSSARY.md` for the Video definition (a Face section, then Slide cards) before proposing cuts or cards. Reversing a decided point needs the Operator's answer and an ADR, not a code edit.
+- Nothing in `src/` drafts or suggests the `<!-- slides -->` list. The Operator writes it by hand in the Channel's Script; the code parses it, checks each phrase against the word timings and places the cards. Grep `src/` before saying a slide-drafting step exists. Proposing placements is authoring: `script-drafter` decides them from the whole Script and writes the proposal file; the Script changes only after the Operator approves it. Never change the spoken words (GLOSSARY: Script).
+
+The decided points and the options they rejected are in ADR 0007 (`docs/adr/0007-face-sections-and-slide-cards-from-a-brand-pack.md`) records them: cite it by number, and read it before changing a card timing or the Face section rule.

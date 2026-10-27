@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" width="256" height="256">
+  <!-- Starter mark: a plain placeholder. Replace it with the channel's own mark. -->
+  <rect x="4" y="4" width="56" height="56" rx="14" fill="#2dd4bf"/>
+  <circle cx="23" cy="28" r="9" fill="#07151f"/>
+  <circle cx="41" cy="28" r="9" fill="#07151f"/>
+  <circle cx="23" cy="28" r="3.5" fill="#f7fafb"/>
+  <circle cx="41" cy="28" r="3.5" fill="#f7fafb"/>
+  <path d="M28 42 L32 48 L36 42 Z" fill="#07151f"/>
+</svg>

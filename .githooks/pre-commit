@@ -1,0 +1,5 @@
+#!/bin/sh
+# Type-check and test before every commit. Enable once per clone: git config core.hooksPath .githooks
+set -e
+uv run mypy
+uv run pytest -q -n auto

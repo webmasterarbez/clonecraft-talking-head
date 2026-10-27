@@ -1,0 +1,8 @@
+# Clone the voice from the Voice Reference and its transcript
+
+The first real Voiceover, cloned from the audio alone ("controllable cloning", ADR 0002), did not sound like the approved voice. The voice the Operator approved came from a hand-picked 16 s reference spoken with its exact transcript ("ultimate cloning": `prompt_wav_path` plus `prompt_text`), `cfg_value` 2.0, denoiser off, and text spoken in chunks of whole sentences up to 18 words joined by 0.4 s pauses. CloneCraft now does the same, and this supersedes the part of ADR 0002 that ruled out a transcript.
+
+- A Voice Reference may have a transcript beside it, `persona/<name>/voice-reference.txt`. When it exists the engine sends it with the audio. Without one the engine falls back to controllable cloning.
+- With a transcript the engine reads a style prefix aloud instead of obeying it (found on the second real Voiceover, which said "warmly"). So no style is sent, and Delivery Cues no longer change how a line sounds. They are still parsed and never spoken.
+- Superseded by ADR 0005, which went back to the earlier project's settings: tuned by ear on 2026-10-23, starting from those settings, whole sentences packed into chunks of up to 40 words (`CHUNK_WORDS` in `script.py`; a longer sentence stays whole), 20 inference steps instead of 10 (`INFERENCE_STEPS` in the worker), and 0.6 s pauses between chunks (`JOIN_PAUSE_S` in `audio.py`, also the longest pause kept inside a take). The clone speaks about 20% faster than Cat (200 against 165 words a minute); slowing it to 85% with `rubberband` or `atempo` matched her pace on paper but sounded worse than leaving it.
+- The earlier project also scored every chunk with an automatic speech check and retried bad ones. ADR 0005 adds it.

@@ -1,0 +1,64 @@
+diff --git a/multitalk/wav2vec2.py b/multitalk/wav2vec2.py
+index be5444c..14538ef 100644
+--- a/multitalk/wav2vec2.py
++++ b/multitalk/wav2vec2.py
+@@ -58,13 +58,7 @@ class Wav2Vec2Model(Wav2Vec2Model):
+             hidden_states, mask_time_indices=mask_time_indices, attention_mask=attention_mask
+         )
+ 
+-        encoder_outputs = self.encoder(
+-            hidden_states,
+-            attention_mask=attention_mask,
+-            output_attentions=output_attentions,
+-            output_hidden_states=output_hidden_states,
+-            return_dict=return_dict,
+-        )
++        encoder_outputs = self.encode_all_layers(hidden_states, attention_mask)
+ 
+         hidden_states = encoder_outputs[0]
+ 
+@@ -80,6 +74,29 @@ class Wav2Vec2Model(Wav2Vec2Model):
+         )
+ 
+ 
++    def encode_all_layers(self, hidden_states, attention_mask=None):
++        """The encoder's output with every layer's hidden states, as transformers 4.x returned them.
++
++        transformers 5.x encoders no longer return per-layer hidden states, which InfiniteTalk needs, so
++        they are collected here by hand: the embeddings first, then each layer's output (CloneCraft patch).
++        """
++        from transformers.masking_utils import create_bidirectional_mask
++
++        encoder = self.encoder
++        assert not self.config.do_stable_layer_norm, "only the post-norm encoder is supported"
++        if attention_mask is not None:
++            hidden_states[~attention_mask.unsqueeze(-1).repeat(1, 1, hidden_states.shape[2])] = 0
++        attention_mask = create_bidirectional_mask(
++            config=self.config, inputs_embeds=hidden_states, attention_mask=attention_mask
++        )
++        hidden_states = hidden_states + encoder.pos_conv_embed(hidden_states).to(hidden_states.device)
++        hidden_states = encoder.dropout(encoder.layer_norm(hidden_states))
++        all_hidden_states = (hidden_states,)
++        for layer in encoder.layers:
++            hidden_states = layer(hidden_states, attention_mask=attention_mask)
++            all_hidden_states += (hidden_states,)
++        return BaseModelOutput(last_hidden_state=hidden_states, hidden_states=all_hidden_states, attentions=None)
++
+     def feature_extract(
+         self,
+         input_values,
+@@ -120,13 +137,7 @@ class Wav2Vec2Model(Wav2Vec2Model):
+             hidden_states, mask_time_indices=mask_time_indices, attention_mask=attention_mask
+         )
+ 
+-        encoder_outputs = self.encoder(
+-            hidden_states,
+-            attention_mask=attention_mask,
+-            output_attentions=output_attentions,
+-            output_hidden_states=output_hidden_states,
+-            return_dict=return_dict,
+-        )
++        encoder_outputs = self.encode_all_layers(hidden_states, attention_mask)
+ 
+         hidden_states = encoder_outputs[0]
+ 

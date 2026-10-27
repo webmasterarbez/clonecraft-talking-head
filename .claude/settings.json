@@ -1,0 +1,48 @@
+{
+  "$schema": "https://json.schemastore.org/claude-code-settings.json",
+  "autoMemoryEnabled": false,
+  "permissions": {
+    "allow": [
+      "Bash(uv sync)",
+      "Bash(uv run mypy)",
+      "Bash(uv run mypy *)",
+      "Bash(uv run pytest)",
+      "Bash(uv run pytest *)",
+      "Bash(uv run python scripts/mutate.py *)",
+      "Bash(uv run clonecraft models)",
+      "Bash(uv run clonecraft --help)",
+      "Bash(nvidia-smi)",
+      "Bash(nvidia-smi *)",
+      "Bash(ffprobe *)",
+      "Bash(git status)",
+      "Bash(git status *)",
+      "Bash(git diff)",
+      "Bash(git diff *)",
+      "Bash(git log *)",
+      "Bash(git show *)",
+      "Bash(gh issue view *)",
+      "Bash(gh issue list *)"
+    ],
+    "ask": [
+      "Bash(sudo *)",
+      "Bash(git push *)",
+      "Bash(uv run clonecraft models --fix)",
+      "Bash(uv run clonecraft voiceover *)",
+      "Bash(uv run clonecraft video *)",
+      "Bash(sh scripts/install-voice-engine.sh)"
+    ],
+    "deny": [
+      "Read(./.env)",
+      "Read(./.env.*)",
+      "Read(~/.ssh/**)",
+      "Read(~/.aws/**)",
+      "Read(~/.config/gh/**)",
+      "Edit(./models/**)",
+      "Bash(git push --force *)",
+      "Bash(git push -f *)",
+      "Bash(git reset --hard *)",
+      "Bash(git clean *)",
+      "Bash(rm -rf *)"
+    ]
+  }
+}

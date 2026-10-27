@@ -1,0 +1,32 @@
+{
+  "name": "My Channel",
+  "source": "Starter brand pack. Edit freely: colours, fonts, mark.",
+  "colors": {
+    "bg": "#07151f",
+    "panel": "#0c1b26",
+    "rail": "#102331",
+    "line": "#224158",
+    "text": "#f7fafb",
+    "muted": "#94aab8",
+    "teal": "#2dd4bf",
+    "teal_strong": "#14b8a6",
+    "mint": "#4ade80",
+    "gold": "#fbbf24",
+    "coral": "#fb7185"
+  },
+  "fonts": {
+    "ui": "PlusJakartaSans-VF.ttf",
+    "mono": "JetBrainsMono-VF.ttf"
+  },
+  "mark": "mark.svg",
+  "disclosure": "AI clone of the channel's host, with consent",
+  "default_style": "b",
+  "mono_caption_family": "JetBrains Mono Medium",
+  "backdrop": {
+    "feather": 1
+  },
+  "face": {
+    "split_top": 0.21,
+    "bubble_top": 0.18
+  }
+}

@@ -1,0 +1,3 @@
+# CloneCraft is self-contained and runs entirely locally
+
+Every Voiceover and Video is generated on the Operator's machine by engines and model files that CloneCraft installs, configures and keeps inside this repo. Nothing calls a hosted AI service, and nothing reads code, config, engines or model files from another local project, even where one already has the same engine installed. Model files may be copied in once from elsewhere on the machine, but after that CloneCraft owns its copy. The trade-off is about 38 GB of duplicate model files plus a separate engine install, in exchange for a tool that keeps working when other projects change or are deleted, and in which a Persona's Likeness and voice never leave the machine.

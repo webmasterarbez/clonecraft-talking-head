@@ -1,0 +1,54 @@
+# Media: source images, voice samples, and rendered videos stay local
+*.jpg
+*.jpeg
+*.png
+*.webp
+*.gif
+*.heic
+*.mp3
+*.wav
+*.m4a
+*.aac
+*.flac
+*.ogg
+*.mp4
+*.mov
+*.webm
+*.mkv
+*.m4v
+
+# Personal content: each persona's likeness and voice, and each channel's
+# scripts, voiceovers and videos
+persona/
+platform/
+
+# Cloned repos that can be downloaded again go here
+vendor/
+
+# Claude Code runtime state and personal settings
+.claude/autoharness/
+.claude/skills/.claude/
+.claude/settings.local.json
+CLAUDE.local.md
+
+# Secrets
+.env
+.env.*
+
+# Model files: about 38 GB, listed with sha256 in config/models.toml
+models/
+
+# Python
+.venv/
+__pycache__/
+.pytest_cache/
+.mypy_cache/
+
+# Local answers (which GPU programs to stop), kept per machine
+settings.local.yaml
+
+# Autoharness bookkeeping beside the project skills
+.claude/skills/*/.ledger.jsonl
+.claude/skills/*/.sidecar.json*
+.claude/skills/*/references/evidence-*.md
+.claude/plugins/

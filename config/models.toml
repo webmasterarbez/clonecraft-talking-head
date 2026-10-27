@@ -1,0 +1,183 @@
+# Every model file CloneCraft uses, relative to models/. Checked by sha256; url is where to download it again.
+
+[[model]]
+path = "comfy/diffusion_models/wan2.1-i2v-14b-480p-Q8_0.gguf"
+purpose = "Face: Wan2.1 image-to-video 14B 480p base model, Q8 GGUF"
+size = 18144640384
+sha256 = "db961e33570a3a7902614ea52b6e77a33d284dfc85743a05e880a02da1164b45"
+url = "https://huggingface.co/city96/Wan2.1-I2V-14B-480P-gguf/resolve/main/wan2.1-i2v-14b-480p-Q8_0.gguf"
+
+[[model]]
+path = "comfy/diffusion_models/wan2.1_i2v_480p_14B_fp8_scaled.safetensors"
+purpose = "Face: Wan2.1 image-to-video 14B 480p base model, fp8 scaled (faster alternative to the Q8 GGUF)"
+size = 16401356938
+sha256 = "b2de21b99b2e72cb0ff15253b07e926f26e7cf1b7e229efc32f94ad1f1ed9395"
+url = "https://huggingface.co/Comfy-Org/Wan_2.1_ComfyUI_repackaged/resolve/main/split_files/diffusion_models/wan2.1_i2v_480p_14B_fp8_scaled.safetensors"
+
+[[model]]
+path = "comfy/diffusion_models/InfiniteTalk/Wan2_1-InfiniTetalk-Single_fp16.safetensors"
+purpose = "Face: InfiniteTalk single-speaker audio-to-motion weights"
+size = 5125258232
+sha256 = "bf212c5c647eaf1c019b2158d2edf4a360d97e38b746c4bac994fee485e09fc3"
+url = "https://huggingface.co/Kijai/WanVideo_comfy/resolve/main/InfiniteTalk/Wan2_1-InfiniTetalk-Single_fp16.safetensors"
+
+[[model]]
+path = "comfy/vae/Wan2_1_VAE_bf16.safetensors"
+purpose = "Face: Wan2.1 VAE (latents to frames)"
+size = 253806278
+sha256 = "1ab9a32cc2c740f6e39d80d367ce5dcc28db8c71b79b28670546b8973e9d75f9"
+url = "https://huggingface.co/Kijai/WanVideo_comfy/resolve/main/Wan2_1_VAE_bf16.safetensors"
+
+[[model]]
+path = "comfy/clip_vision/clip_vision_h.safetensors"
+purpose = "Face: CLIP vision encoder for the portrait"
+size = 1264219396
+sha256 = "64a7ef761bfccbadbaa3da77366aac4185a6c58fa5de5f589b42a65bcc21f161"
+url = "https://huggingface.co/Comfy-Org/Wan_2.1_ComfyUI_repackaged/resolve/main/split_files/clip_vision/clip_vision_h.safetensors"
+
+[[model]]
+path = "comfy/loras/Lightx2v/lightx2v_I2V_14B_480p_cfg_step_distill_rank64_bf16.safetensors"
+purpose = "Face: Lightx2v step-distill LoRA (6 steps, no CFG)"
+size = 738005744
+sha256 = "85c4a61c30e0497aa44b91d93a893b624708461a56fe5485183b28fa07e2dfb3"
+url = "https://huggingface.co/Kijai/WanVideo_comfy/resolve/main/Lightx2v/lightx2v_I2V_14B_480p_cfg_step_distill_rank64_bf16.safetensors"
+
+[[model]]
+path = "comfy/text_encoders/umt5-xxl-enc-fp8_e4m3fn.safetensors"
+purpose = "Face: umt5-xxl text encoder, fp8 (the motion prompt)"
+size = 6731333792
+sha256 = "3fe5173588270c22505d4f9158bb1644b78331b8614206a97e92760b960c9ffa"
+url = "https://huggingface.co/Kijai/WanVideo_comfy/resolve/main/umt5-xxl-enc-fp8_e4m3fn.safetensors"
+
+[[model]]
+path = "comfy/transformers/TencentGameMate/chinese-wav2vec2-base/README.md"
+purpose = "Face: wav2vec2 audio features that drive InfiniteTalk's lip sync"
+size = 1923
+sha256 = "fcc08e87ab74a235c489cf0cfde474a501b4217a701d2ef96b05fb49e1f667cb"
+url = "https://huggingface.co/TencentGameMate/chinese-wav2vec2-base/resolve/3991242c806928916fff4a8c0e4f76acf661b743/README.md"
+
+[[model]]
+path = "comfy/transformers/TencentGameMate/chinese-wav2vec2-base/config.json"
+purpose = "Face: wav2vec2 audio features that drive InfiniteTalk's lip sync"
+size = 1951
+sha256 = "dc2cd2f989104b9510ce9e43a343a6f1fe55aa60baa1fcfca0c5908e6590b8b6"
+url = "https://huggingface.co/TencentGameMate/chinese-wav2vec2-base/resolve/3991242c806928916fff4a8c0e4f76acf661b743/config.json"
+
+[[model]]
+path = "comfy/transformers/TencentGameMate/chinese-wav2vec2-base/preprocessor_config.json"
+purpose = "Face: wav2vec2 audio features that drive InfiniteTalk's lip sync"
+size = 160
+sha256 = "c1707926644954affc391ab09ccfaf470ccd80af218d11350991090711441c09"
+url = "https://huggingface.co/TencentGameMate/chinese-wav2vec2-base/resolve/3991242c806928916fff4a8c0e4f76acf661b743/preprocessor_config.json"
+
+[[model]]
+path = "comfy/transformers/TencentGameMate/chinese-wav2vec2-base/pytorch_model.bin"
+purpose = "Face: wav2vec2 audio features that drive InfiniteTalk's lip sync"
+size = 380261837
+sha256 = "be2da40c9e7ae26bfc904a3ed79ebb9e8f060bec6dba85d6a6ae86114bc38901"
+url = "https://huggingface.co/TencentGameMate/chinese-wav2vec2-base/resolve/3991242c806928916fff4a8c0e4f76acf661b743/pytorch_model.bin"
+
+[[model]]
+path = "hf/hub/models--openbmb--VoxCPM2/snapshots/32279effe8c19989596f05d353d1447f51d9e915/.gitattributes"
+purpose = "Voice: VoxCPM2 voice clone model"
+size = 1519
+sha256 = "11ad7efa24975ee4b0c3c3a38ed18737f0658a5f75a0a96787b576a78a023361"
+url = "https://huggingface.co/openbmb/VoxCPM2/resolve/32279effe8c19989596f05d353d1447f51d9e915/.gitattributes"
+
+[[model]]
+path = "hf/hub/models--openbmb--VoxCPM2/snapshots/32279effe8c19989596f05d353d1447f51d9e915/README.md"
+purpose = "Voice: VoxCPM2 voice clone model"
+size = 7939
+sha256 = "c18d2ffbfb2f0aec770481c967842aee6c200cde65f6b033efd892a849986fda"
+url = "https://huggingface.co/openbmb/VoxCPM2/resolve/32279effe8c19989596f05d353d1447f51d9e915/README.md"
+
+[[model]]
+path = "hf/hub/models--openbmb--VoxCPM2/snapshots/32279effe8c19989596f05d353d1447f51d9e915/audiovae.pth"
+purpose = "Voice: VoxCPM2 voice clone model"
+size = 376951122
+sha256 = "94b5d51e107e0507d4acc976cfdadb64edd6fd06d1f751dadbf2fd1594274bf1"
+url = "https://huggingface.co/openbmb/VoxCPM2/resolve/32279effe8c19989596f05d353d1447f51d9e915/audiovae.pth"
+
+[[model]]
+path = "hf/hub/models--openbmb--VoxCPM2/snapshots/32279effe8c19989596f05d353d1447f51d9e915/config.json"
+purpose = "Voice: VoxCPM2 voice clone model"
+size = 4336
+sha256 = "405f0dcd92f7feba6011ed4eac5c8d4f74cba9712f07fd5cfa3063bbdd95402c"
+url = "https://huggingface.co/openbmb/VoxCPM2/resolve/32279effe8c19989596f05d353d1447f51d9e915/config.json"
+
+[[model]]
+path = "hf/hub/models--openbmb--VoxCPM2/snapshots/32279effe8c19989596f05d353d1447f51d9e915/model.safetensors"
+purpose = "Voice: VoxCPM2 voice clone model"
+size = 4580080592
+sha256 = "f7f964cfa9da23653baec6e6f7750719977ad944ed9f95fe52fe3a620506891d"
+url = "https://huggingface.co/openbmb/VoxCPM2/resolve/32279effe8c19989596f05d353d1447f51d9e915/model.safetensors"
+
+[[model]]
+path = "hf/hub/models--openbmb--VoxCPM2/snapshots/32279effe8c19989596f05d353d1447f51d9e915/special_tokens_map.json"
+purpose = "Voice: VoxCPM2 voice clone model"
+size = 1632
+sha256 = "068594063e37662c02b21acf42ebb334ef6a74fb810e68a2368f88f08351de76"
+url = "https://huggingface.co/openbmb/VoxCPM2/resolve/32279effe8c19989596f05d353d1447f51d9e915/special_tokens_map.json"
+
+[[model]]
+path = "hf/hub/models--openbmb--VoxCPM2/snapshots/32279effe8c19989596f05d353d1447f51d9e915/tokenization_voxcpm2.py"
+purpose = "Voice: VoxCPM2 voice clone model"
+size = 2895
+sha256 = "84489ea32b6ee0cae22ed5480cacb6df85c46624c3119be9a2021c3649a12729"
+url = "https://huggingface.co/openbmb/VoxCPM2/resolve/32279effe8c19989596f05d353d1447f51d9e915/tokenization_voxcpm2.py"
+
+[[model]]
+path = "hf/hub/models--openbmb--VoxCPM2/snapshots/32279effe8c19989596f05d353d1447f51d9e915/tokenizer.json"
+purpose = "Voice: VoxCPM2 voice clone model"
+size = 3676772
+sha256 = "f8984687e4a92a3503d521396d454b7d68e9fdaab2a0288eb3536c7c1aa4bc20"
+url = "https://huggingface.co/openbmb/VoxCPM2/resolve/32279effe8c19989596f05d353d1447f51d9e915/tokenizer.json"
+
+[[model]]
+path = "hf/hub/models--openbmb--VoxCPM2/snapshots/32279effe8c19989596f05d353d1447f51d9e915/tokenizer_config.json"
+purpose = "Voice: VoxCPM2 voice clone model"
+size = 5059
+sha256 = "e78a3ebb48a0b9437efd1823b6b726c823da89e49dd8bcc90c02419d9baa772b"
+url = "https://huggingface.co/openbmb/VoxCPM2/resolve/32279effe8c19989596f05d353d1447f51d9e915/tokenizer_config.json"
+
+[[model]]
+path = "hf/hub/models--mobiuslabsgmbh--faster-whisper-large-v3-turbo/snapshots/0a363e9161cbc7ed1431c9597a8ceaf0c4f78fcf/README.md"
+purpose = "Voice: faster-whisper transcriber for the speech check (ADR 0005)"
+size = 185
+sha256 = "2ba111b8baf4a84e51954b445de7ac5e5fb8f2d6e983a9a1845af174ccdd12be"
+url = "https://huggingface.co/mobiuslabsgmbh/faster-whisper-large-v3-turbo/resolve/0a363e9161cbc7ed1431c9597a8ceaf0c4f78fcf/README.md"
+
+[[model]]
+path = "hf/hub/models--mobiuslabsgmbh--faster-whisper-large-v3-turbo/snapshots/0a363e9161cbc7ed1431c9597a8ceaf0c4f78fcf/config.json"
+purpose = "Voice: faster-whisper transcriber for the speech check (ADR 0005)"
+size = 2263
+sha256 = "b0253ea6c0d3bea6b1e19e91a02acfd3b53f4467362efcb5a3e6b16c9b3a9b7e"
+url = "https://huggingface.co/mobiuslabsgmbh/faster-whisper-large-v3-turbo/resolve/0a363e9161cbc7ed1431c9597a8ceaf0c4f78fcf/config.json"
+
+[[model]]
+path = "hf/hub/models--mobiuslabsgmbh--faster-whisper-large-v3-turbo/snapshots/0a363e9161cbc7ed1431c9597a8ceaf0c4f78fcf/model.bin"
+purpose = "Voice: faster-whisper transcriber for the speech check (ADR 0005)"
+size = 1617884929
+sha256 = "e76620f83d5f5b69efd3d87e3dc180c1bd21df9fbebacfd4335e5e1efcc018da"
+url = "https://huggingface.co/mobiuslabsgmbh/faster-whisper-large-v3-turbo/resolve/0a363e9161cbc7ed1431c9597a8ceaf0c4f78fcf/model.bin"
+
+[[model]]
+path = "hf/hub/models--mobiuslabsgmbh--faster-whisper-large-v3-turbo/snapshots/0a363e9161cbc7ed1431c9597a8ceaf0c4f78fcf/preprocessor_config.json"
+purpose = "Voice: faster-whisper transcriber for the speech check (ADR 0005)"
+size = 340
+sha256 = "7ccc62c6f2765af1f3b46c00c9b5894426835a05021c8b9c01eecb6dfb542711"
+url = "https://huggingface.co/mobiuslabsgmbh/faster-whisper-large-v3-turbo/resolve/0a363e9161cbc7ed1431c9597a8ceaf0c4f78fcf/preprocessor_config.json"
+
+[[model]]
+path = "hf/hub/models--mobiuslabsgmbh--faster-whisper-large-v3-turbo/snapshots/0a363e9161cbc7ed1431c9597a8ceaf0c4f78fcf/tokenizer.json"
+purpose = "Voice: faster-whisper transcriber for the speech check (ADR 0005)"
+size = 2710337
+sha256 = "297b13372ac43916285644fb9687add3cc62ee2a1adb60da3dc25cc94c1871fd"
+url = "https://huggingface.co/mobiuslabsgmbh/faster-whisper-large-v3-turbo/resolve/0a363e9161cbc7ed1431c9597a8ceaf0c4f78fcf/tokenizer.json"
+
+[[model]]
+path = "hf/hub/models--mobiuslabsgmbh--faster-whisper-large-v3-turbo/snapshots/0a363e9161cbc7ed1431c9597a8ceaf0c4f78fcf/vocabulary.json"
+purpose = "Voice: faster-whisper transcriber for the speech check (ADR 0005)"
+size = 1068114
+sha256 = "c69260f2ab26d659b7c398f9a2b2b48ed0df16c3b47d7326782fd9cba71690c1"
+url = "https://huggingface.co/mobiuslabsgmbh/faster-whisper-large-v3-turbo/resolve/0a363e9161cbc7ed1431c9597a8ceaf0c4f78fcf/vocabulary.json"
